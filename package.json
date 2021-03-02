@@ -1,0 +1,24 @@
+{
+  "name": "zolpidem",
+  "version": "1.0.0",
+  "description": "Chrome extension to put tabs to sleep",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/brihoumb/zolpidem-chrome-extension.git"
+  },
+  "keywords": [
+    "chrome",
+    "tabs",
+    "extension"
+  ],
+  "author": "brihoumb",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brihoumb/zolpidem-chrome-extension/issues"
+  },
+  "homepage": "https://github.com/brihoumb/zolpidem-chrome-extension#readme"
+}

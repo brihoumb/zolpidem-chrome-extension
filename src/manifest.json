@@ -1,0 +1,54 @@
+{
+  "version": "1.0",
+  "manifest_version": 3,
+  "name": "Zolpidem Sleeping Extension",
+  "description": "Let's go to bed baby tabs",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "tabs",
+    "downloads"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "/images/get_started16.png",
+      "32": "/images/get_started32.png",
+      "48": "/images/get_started48.png",
+      "128": "/images/get_started128.png"
+    }
+  },
+  "icons": {
+    "16": "/images/ic_suspendy_16x16.png",
+    "32": "/images/ic_suspendy_32x32.png",
+    "48": "/images/ic_suspendy_48x48.png",
+    "128": "/images/ic_suspendy_128x128.png"
+  },
+  "commands": {
+    "toggle_sleep": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F",
+        "mac": "MacCtrl+Shift+F"
+      },
+      "description": "Toggle sleep to current tab."
+    },
+    "toggle_all_sleep": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "mac": "MacCtrl+Shift+S"
+      },
+      "description": "Toggle sleep to all other tabs."
+    },
+    "wake_all_asleep": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+H",
+        "mac": "MacCtrl+Shift+H"
+      },
+      "description": "Wake all sleeping tabs."
+    }
+  }
+}

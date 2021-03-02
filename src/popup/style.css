@@ -1,0 +1,56 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    margin-bottom: 5%;
+    text-align: center;
+    background-color: #333;
+}
+
+h2 {
+    color: #00cccc;
+}
+
+.inputfile {
+    opacity: 0;
+    z-index: -1;
+    width: 0.1px;
+    height: 0.1px;
+    overflow: hidden;
+    position: absolute;
+}
+
+#button {
+    padding: 4%;
+    border: none;
+    text-decoration: none;
+}
+
+.inputfile + label,
+#button {
+    width: 80%;
+    padding: 4% 0 4% 0;
+    color: white;
+    font-weight: 700;
+    font-size: 1.25em;
+    text-align: center;
+    display: inline-block;
+    background-color: black;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover,
+#button:hover {
+    background-color: gray;
+}
+
+.dragover {
+    background-color: #50c3c3 !important;
+}
+
+
+.inputfile + label,
+#button {
+	cursor: pointer;
+}
