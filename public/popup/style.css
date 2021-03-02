@@ -9,7 +9,7 @@ body {
 }
 
 h2 {
-    color: #00cccc;
+    color: #0cc;
 }
 
 .inputfile {
@@ -21,27 +21,27 @@ h2 {
     position: absolute;
 }
 
-#button {
+.button {
     padding: 4%;
     border: none;
     text-decoration: none;
 }
 
 .inputfile + label,
-#button {
+.button {
     width: 80%;
-    padding: 4% 0 4% 0;
     color: white;
     font-weight: 700;
     font-size: 1.25em;
     text-align: center;
+    padding: 4% 0 4% 0;
     display: inline-block;
     background-color: black;
 }
 
 .inputfile:focus + label,
 .inputfile + label:hover,
-#button:hover {
+.button:hover {
     background-color: gray;
 }
 
@@ -51,6 +51,6 @@ h2 {
 
 
 .inputfile + label,
-#button {
+.button {
 	cursor: pointer;
 }

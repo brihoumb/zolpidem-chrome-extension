@@ -5,12 +5,12 @@ html, body {
     background-color: #333;
 }
 
-div.container {
+.container {
     height: 100%;
     position: relative;
 }
 
-#icon {
+.icon {
     top: 50%;
     left: 50%;
     margin: 0;

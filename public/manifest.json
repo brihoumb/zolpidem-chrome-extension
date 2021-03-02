@@ -4,7 +4,7 @@
   "name": "Zolpidem Sleeping Extension",
   "description": "Let's go to bed baby tabs",
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "js/background.js"
   },
   "permissions": [
     "tabs",
