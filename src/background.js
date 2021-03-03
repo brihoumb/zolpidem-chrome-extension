@@ -5,46 +5,87 @@ chrome.runtime.onInstalled.addListener(() => {});
 chrome.commands.onCommand.addListener(async (command) => {
   switch (command) {
     case 'toggle_sleep': toggleSleep(); break;
-    case 'wake_all_asleep': wakeAllSsleep(); break;
+    case 'wake_all_asleep': wakeAllAsleep(); break;
     case 'toggle_all_sleep': toggleAllSleep(); break;
     default: break;
-  };
+  }
 });
 
-String.prototype.header = function() {
-  return (this.startsWith('file://') ||
-          this.startsWith('chrome://') ||
-          this.startsWith('about:blank') ||
-          this.startsWith('chrome-extension://'));
+/**
+* Check if the url header does not start with the specific cases.
+*
+* @function checkHeader
+* @param {string} url - the url in the tab.
+* @return {boolean} - true if the url starts with one of the cases.
+*/
+function checkHeader(url) {
+  return (url.startsWith('file://') ||
+          url.startsWith('chrome://') ||
+          url.startsWith('about:blank') ||
+          url.startsWith('chrome-extension://'));
 };
 
+/**
+* Check if the url header does not start with the specific cases.
+*
+* @function checkHeader
+* @param {string} title - the title of the web page in the tab.
+* @param {string} url - the url in the tab.
+* @return {string} - the final url for the suspended tab with it's parameter.
+*/
+function suspendURL(title, url) {
+  const uri = `url=${encodeURI(url)}`;
+  const ttl = `ttl=${encodeURI(title)}`;
+  const base = 'suspended/suspended.html';
+
+  return `${base}?${ttl}&${uri}`;
+}
+
+/**
+* Set the active tab in the active window in suspended mode.
+*
+* @async
+* @function toggleSleep
+*/
 async function toggleSleep() {
   const [tab] = await chrome.tabs.query({active: true, currentWindow: true});
 
-  if (!tab.url.header()) {
-    await chrome.tabs.update(tab.id, {url: `suspended/suspended.html?ttl=${encodeURI(tab.title)}&url=${encodeURI(tab.url)}`});
+  if (!checkHeader(tab.url)) {
+    await chrome.tabs.update(tab.id,
+        {url: suspendURL(tab.title, tab.url)});
   }
-  return 0;
 }
 
+/**
+* Set the all tab except the active tab in the active window in suspended mode.
+*
+* @async
+* @function toggleAllSleep
+*/
 async function toggleAllSleep() {
   const tabs = await chrome.tabs.query({active: false, currentWindow: true});
 
   for (let i = 0; i != tabs.length; i++) {
-    if (!tabs[i].url.header()) {
-      await chrome.tabs.update(tabs[i].id, {url: `suspended/suspended.html?ttl=${encodeURI(tabs[i].title)}&url=${encodeURI(tabs[i].url)}`});
+    if (!checkHeader(tabs[i].url)) {
+      await chrome.tabs.update(tabs[i].id,
+          {url: suspendURL(tabs[i].title, tabs[i].url)});
     }
   }
-  return 0;
 }
 
+/**
+* Wake all tab from the active window.
+*
+* @async
+* @function wakeAllAsleep
+*/
 async function wakeAllAsleep() {
   const tabs = await chrome.tabs.query({active: false, currentWindow: true});
 
   for (let i = 0; i != tabs.length; i++) {
     if (tabs[i].url.startsWith(`chrome-extension://${chrome.runtime.id}`)) {
-      await chrome.tabs.update(tabs[i].id, {url: tabs[i].url.slice(tabs[i].url.indexOf('url') + 4)})
+      const url = tabs[i].url.slice(tabs[i].url.indexOf('url') + 4);
+      await chrome.tabs.update(tabs[i].id, {url: url});
     }
   }
-  return 0;
 }

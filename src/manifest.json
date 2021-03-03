@@ -4,7 +4,7 @@
   "name": "Zolpidem Sleeping Extension",
   "description": "Let's go to bed baby tabs",
   "background": {
-    "service_worker": "js/background.js"
+    "service_worker": "background.js"
   },
   "permissions": [
     "tabs",
@@ -38,8 +38,8 @@
     },
     "toggle_all_sleep": {
       "suggested_key": {
-        "default": "Ctrl+Shift+S",
-        "mac": "MacCtrl+Shift+S"
+        "default": "Ctrl+Shift+G",
+        "mac": "MacCtrl+Shift+G"
       },
       "description": "Toggle sleep to all other tabs."
     },

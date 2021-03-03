@@ -10,5 +10,7 @@
         "ecmaVersion": 12
     },
     "rules": {
+      "guard-for-in": 1,
+      "prefer-const": 1
     }
 }
