@@ -42,7 +42,6 @@ async function exportSession() {
     url: url,
     filename: 'session.json',
   });
-  URL.revokeObjectURL(url);
 };
 
 document.getElementById('button').addEventListener('click', exportSession);
