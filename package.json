@@ -4,7 +4,7 @@
   "description": "Chrome extension to put tabs to sleep",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon"
+    "lint": "eslint ./src/ --ext .js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,10 @@
   "bugs": {
     "url": "https://github.com/brihoumb/zolpidem-chrome-extension/issues"
   },
-  "homepage": "https://github.com/brihoumb/zolpidem-chrome-extension#readme"
+  "homepage": "https://github.com/brihoumb/zolpidem-chrome-extension#readme",
+  "devDependencies": {
+    "eslint": "^7.21.0",
+    "eslint-config-google": "^0.14.0",
+    "rimraf": "^3.0.2"
+  }
 }

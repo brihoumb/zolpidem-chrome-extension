@@ -4,9 +4,9 @@ chrome.runtime.onInstalled.addListener(() => {});
 
 chrome.commands.onCommand.addListener(async (command) => {
   switch (command) {
-    case 'toggle_sleep': toggle_sleep(); break;
-    case 'wake_all_asleep': wake_all_asleep(); break;
-    case 'toggle_all_sleep': toggle_all_sleep(); break;
+    case 'toggle_sleep': toggleSleep(); break;
+    case 'wake_all_asleep': wakeAllSsleep(); break;
+    case 'toggle_all_sleep': toggleAllSleep(); break;
     default: break;
   };
 });
@@ -18,8 +18,8 @@ String.prototype.header = function() {
           this.startsWith('chrome-extension://'));
 };
 
-async function toggle_sleep() {
-  let [tab] = await chrome.tabs.query({active: true, currentWindow: true});
+async function toggleSleep() {
+  const [tab] = await chrome.tabs.query({active: true, currentWindow: true});
 
   if (!tab.url.header()) {
     await chrome.tabs.update(tab.id, {url: `suspended/suspended.html?ttl=${encodeURI(tab.title)}&url=${encodeURI(tab.url)}`});
@@ -27,8 +27,8 @@ async function toggle_sleep() {
   return 0;
 }
 
-async function toggle_all_sleep() {
-  let tabs = await chrome.tabs.query({active: false, currentWindow: true});
+async function toggleAllSleep() {
+  const tabs = await chrome.tabs.query({active: false, currentWindow: true});
 
   for (let i = 0; i != tabs.length; i++) {
     if (!tabs[i].url.header()) {
@@ -38,8 +38,8 @@ async function toggle_all_sleep() {
   return 0;
 }
 
-async function wake_all_asleep() {
-  let tabs = await chrome.tabs.query({active: false, currentWindow: true});
+async function wakeAllAsleep() {
+  const tabs = await chrome.tabs.query({active: false, currentWindow: true});
 
   for (let i = 0; i != tabs.length; i++) {
     if (tabs[i].url.startsWith(`chrome-extension://${chrome.runtime.id}`)) {
