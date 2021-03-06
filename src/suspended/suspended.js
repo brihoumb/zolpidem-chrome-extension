@@ -13,7 +13,7 @@ function getURLParameter(sParam) {
   const sURLVariables = sPageURL.split('&');
   for (let i = 0; i != sURLVariables.length; i++) {
     const [sParameterName, sParameterValue] = sURLVariables[i].split('=');
-    if (sParameterName == sParam) {
+    if (sParameterName === sParam) {
       return decodeURI(sParameterValue);
     }
   }
@@ -41,7 +41,7 @@ function restore() {
 
 (() => {
   document.title = getURLParameter('ttl') ?? 'Suspended tab';
-  if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+  if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
     restore();
   }
 })();

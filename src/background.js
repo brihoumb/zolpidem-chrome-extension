@@ -1,6 +1,34 @@
 'use strict';
 
-chrome.runtime.onInstalled.addListener(() => {});
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.contextMenus.create({
+      contexts: ['page'],
+      id: 'suspendThisTab',
+      title: 'Suspend this tab'
+  });
+
+  chrome.contextMenus.create({
+      contexts: ['page'],
+      id: 'suspendAllTabs',
+      title: 'Suspend all other tabs'
+  });
+
+  chrome.contextMenus.create({
+      contexts: ['page'],
+      id: 'wakeAllTabs',
+      title: 'Wake all suspended tabs'
+  });
+
+  chrome.contextMenus.onClicked.addListener((info) => {
+      if (info.menuItemId === 'suspendThisTab') {
+          toggleSleep();
+      } else if (info.menuItemId === 'suspendAllTabs') {
+        toggleAllSleep();
+      } else if (info.menuItemId === 'wakeAllTabs') {
+        wakeAllAsleep();
+      }
+  });
+});
 
 chrome.commands.onCommand.addListener(async (command) => {
   switch (command) {
@@ -80,7 +108,7 @@ async function toggleAllSleep() {
 * @function wakeAllAsleep
 */
 async function wakeAllAsleep() {
-  const tabs = await chrome.tabs.query({active: false, currentWindow: true});
+  const tabs = await chrome.tabs.query({currentWindow: true});
 
   for (let i = 0; i != tabs.length; i++) {
     if (tabs[i].url.startsWith(`chrome-extension://${chrome.runtime.id}`)) {

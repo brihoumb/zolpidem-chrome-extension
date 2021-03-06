@@ -1,14 +1,16 @@
 {
   "version": "1.0",
   "manifest_version": 3,
-  "name": "Zolpidem Sleeping Extension",
+  "minimum_chrome_version": "68",
+   "name": "Zolpidem Sleeping Extension",
   "description": "Let's go to bed baby tabs",
   "background": {
     "service_worker": "background.js"
   },
   "permissions": [
     "tabs",
-    "downloads"
+    "downloads",
+    "contextMenus"
   ],
   "host_permissions": [
     "*://*/*"

@@ -4,7 +4,7 @@ let WINDOW_ID = -1;
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (!tab.active &&
       tab.windowId === WINDOW_ID &&
-      changeInfo.status == 'complete') {
+      changeInfo.status === 'complete') {
     chrome.tabs.discard(tabId);
   }
 });
