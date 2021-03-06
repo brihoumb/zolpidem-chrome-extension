@@ -2,8 +2,8 @@
   "version": "1.0",
   "manifest_version": 3,
   "minimum_chrome_version": "68",
-   "name": "Zolpidem Sleeping Extension",
-  "description": "Let's go to bed baby tabs",
+  "name": "Zolpidem Sleeping Extension",
+  "description": "Suspend tabs and free your RAM.",
   "background": {
     "service_worker": "background.js"
   },
@@ -18,10 +18,11 @@
   "action": {
     "default_popup": "popup/popup.html",
     "default_icon": {
-      "16": "/images/get_started16.png",
-      "32": "/images/get_started32.png",
-      "48": "/images/get_started48.png",
-      "128": "/images/get_started128.png"
+      "16": "/images/icon16.png",
+      "32": "/images/icon32.png",
+      "48": "/images/icon48.png",
+      "64": "/images/icon64.png",
+      "128": "/images/icon128.png"
     }
   },
   "icons": {

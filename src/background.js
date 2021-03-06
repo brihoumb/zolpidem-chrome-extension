@@ -2,31 +2,31 @@
 
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
-      contexts: ['page'],
-      id: 'suspendThisTab',
-      title: 'Suspend this tab'
+    contexts: ['page'],
+    id: 'suspendThisTab',
+    title: 'Suspend this tab',
   });
 
   chrome.contextMenus.create({
-      contexts: ['page'],
-      id: 'suspendAllTabs',
-      title: 'Suspend all other tabs'
+    contexts: ['page'],
+    id: 'suspendAllTabs',
+    title: 'Suspend all other tabs',
   });
 
   chrome.contextMenus.create({
-      contexts: ['page'],
-      id: 'wakeAllTabs',
-      title: 'Wake all suspended tabs'
+    contexts: ['page'],
+    id: 'wakeAllTabs',
+    title: 'Wake all suspended tabs',
   });
 
   chrome.contextMenus.onClicked.addListener((info) => {
-      if (info.menuItemId === 'suspendThisTab') {
-          toggleSleep();
-      } else if (info.menuItemId === 'suspendAllTabs') {
-        toggleAllSleep();
-      } else if (info.menuItemId === 'wakeAllTabs') {
-        wakeAllAsleep();
-      }
+    if (info.menuItemId === 'suspendThisTab') {
+      toggleSleep();
+    } else if (info.menuItemId === 'suspendAllTabs') {
+      toggleAllSleep();
+    } else if (info.menuItemId === 'wakeAllTabs') {
+      wakeAllAsleep();
+    }
   });
 });
 
