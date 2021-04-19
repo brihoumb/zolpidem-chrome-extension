@@ -1,8 +1,8 @@
 'use strict';
 
 const jsdoc2md = require('jsdoc-to-markdown');
-const { readdir, writeFile } = require('fs').promises;
-const { posix, win32, join, resolve } = require('path');
+const {readdir, writeFile} = require('fs').promises;
+const {posix, win32, join, resolve} = require('path');
 const system = (process.platform === "win32" ? "win32" : "posix");
 
 async function *getFiles(dir) {
