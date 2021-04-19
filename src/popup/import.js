@@ -78,7 +78,7 @@ function readFile(file) {
 }
 
 /**
-* Get the file given in the <input> HTML tag.
+* Get the file given in the input HTML tag.
 *
 * @event onChange
 * @function importSession
