@@ -1,14 +1,9 @@
 html, body {
     margin: 0;
     padding: 0;
-    width: 200px;
-    margin-bottom: 5%;
+    width: 340px;
     text-align: center;
-    background-color: #333;
-}
-
-h2 {
-    color: #0cc;
+    background-color: #111;
 }
 
 .inputfile {
@@ -26,25 +21,36 @@ h2 {
     text-decoration: none;
 }
 
-.button, .inputfile + label {
-    width: 80%;
+.button,
+.inputfile + label {
+    width: 100%;
     color: white;
     font-weight: 700;
     font-size: 1.25em;
     text-align: center;
     padding: 4% 0 4% 0;
     display: inline-block;
-    background-color: black;
+    background-color: #364364;
 }
 
-.button:hover, .inputfile:focus + label, .inputfile + label:hover {
-    background-color: gray;
+.button:hover,
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: #6C86C8;
 }
 
 .dragover {
     background-color: #50c3c3 !important;
 }
 
-.button, .inputfile + label {
+.button,
+.inputfile + label {
 	cursor: pointer;
+}
+
+.small {
+    float:left;
+    width: 33.3%;
+    display: block;
+    position: relative;
 }

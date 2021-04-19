@@ -36,16 +36,17 @@ async function createTab(url) {
 * @async
 * @function setToGroup
 * @param {Array.<number>} tabs - the list of tabs id.
-* @param {string} key - the id of the group as a string (-1 if no group).
+* @param {string} key - the name of the group as a string (-1 if no group).
 * @return {number} - the id of the created group or -1 if no group were created.
 */
 async function setToGroup(tabs, key) {
   if (key !== '-1') {
-    const groupid = await chrome.tabs.group({
+    const groupId = await chrome.tabs.group({
       tabIds: tabs,
       createProperties: {windowId: WINDOW_ID},
     });
-    return groupid;
+    await chrome.tabGroups.update(groupId, {title: key});
+    return groupId;
   } else {
     return -1;
   }

@@ -14,20 +14,10 @@ function getURLParameter(sParam) {
   for (let i = 0; i != sURLVariables.length; i++) {
     const [sParameterName, sParameterValue] = sURLVariables[i].split('=');
     if (sParameterName === sParam) {
-      return decodeURI(sParameterValue);
+      return decodeURIComponent(sParameterValue);
     }
   }
   return null;
-}
-
-/**
-* Retrieve the original url from the parameter.
-*
-* @function getURL
-* @return {string} - the original url of the tab.
-*/
-function getURL() {
-  return decodeURI(sPageURL.slice(sPageURL.indexOf('url') + 4));
 }
 
 /**
@@ -36,11 +26,13 @@ function getURL() {
 * @function restore
 */
 function restore() {
-  window.location.replace(getURL() ?? window.location.href);
+  window.location.replace(getURLParameter('url') ?? window.location.href);
 }
 
 (() => {
+  document.getElementById('url').innerText = getURLParameter('url');
   document.title = getURLParameter('ttl') ?? 'Suspended tab';
+  document.getElementById('title').innerText = document.title;
   if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
     restore();
   }

@@ -5,12 +5,20 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <h2>Import session file:</h2>
-        <input id="file" class="inputfile" type="file" name="file" accept="application/json"/>
-        <label id="lfile" for="file">Choose a file</label>
-        <hr/>
-        <h2>Export session file:</h2>
-        <button id="button" class="button">Export session</button>
+        <div title="actions">
+            <button id="sleep" class="button small" title="Sleep tab">💤</button>
+            <button id="sleepall" class="button small" title="Sleep all tabs">🌙</button>
+            <button id="wake" class="button small" title="Wake all tabs">🌞</button>
+        </div>
+        <div title="import">
+            <input id="file" class="inputfile" type="file" name="file" accept="application/json"/>
+            <label id="lfile" for="file">Import session</label>
+        </div>
+        <div title="export">
+            <button id="export" class="button">Export session</button>
+        </div>
+
+        <script src="actions.js"></script>
         <script src="export.js"></script>
         <script src="import.js"></script>
     </body>

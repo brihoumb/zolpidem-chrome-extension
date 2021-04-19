@@ -1,44 +1,5 @@
 'use strict';
 
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.contextMenus.create({
-    contexts: ['page'],
-    id: 'suspendThisTab',
-    title: 'Suspend this tab',
-  });
-
-  chrome.contextMenus.create({
-    contexts: ['page'],
-    id: 'suspendAllTabs',
-    title: 'Suspend all other tabs',
-  });
-
-  chrome.contextMenus.create({
-    contexts: ['page'],
-    id: 'wakeAllTabs',
-    title: 'Wake all suspended tabs',
-  });
-
-  chrome.contextMenus.onClicked.addListener((info) => {
-    if (info.menuItemId === 'suspendThisTab') {
-      toggleSleep();
-    } else if (info.menuItemId === 'suspendAllTabs') {
-      toggleAllSleep();
-    } else if (info.menuItemId === 'wakeAllTabs') {
-      wakeAllAsleep();
-    }
-  });
-});
-
-chrome.commands.onCommand.addListener(async (command) => {
-  switch (command) {
-    case 'toggle_sleep': toggleSleep(); break;
-    case 'wake_all_asleep': wakeAllAsleep(); break;
-    case 'toggle_all_sleep': toggleAllSleep(); break;
-    default: break;
-  }
-});
-
 /**
 * Check if the url header does not start with the specific cases.
 *
@@ -115,3 +76,7 @@ async function wakeAllAsleep() {
     }
   }
 }
+
+document.getElementById('sleep').addEventListener('click', toggleSleep);
+document.getElementById('wake').addEventListener('click', wakeAllAsleep);
+document.getElementById('sleepall').addEventListener('click', toggleAllSleep);

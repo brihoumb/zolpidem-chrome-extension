@@ -5,16 +5,35 @@ html, body {
   background-color: #333;
 }
 
-.container {
-    height: 100%;
-    position: relative;
+h1, h3 {
+	margin: 0;
+	padding: 0;
+	color: white;
+	text-align: center;
+	white-space: nowrap;
 }
 
-.icon {
+h1 {
+	font-size: 2vh;
+}
+
+/*.container {
+    height: 100%;
+    position: relative;
+}*/
+
+/*.icon*/ .container{
     top: 50%;
     left: 50%;
     margin: 0;
-    margin-right: -50%;
+    /* margin-right: -50%; */
     position: absolute;
     transform: translate(-50%, -50%)
+}
+
+.icon {
+  width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }

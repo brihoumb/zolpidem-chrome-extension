@@ -11,6 +11,7 @@
     },
     "rules": {
       "guard-for-in": 1,
-      "prefer-const": 1
+      "prefer-const": 1,
+      "max-len": [2, {"code": 120, "ignoreUrls": true}]
     }
 }
