@@ -4,8 +4,9 @@
   "description": "Chrome extension to put tabs to sleep",
   "main": "index.js",
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "rimraf dist documentation/*.md",
     "build": "node build.js",
+    "doc": "node jsdoc2md.js",
     "lint": "eslint ./src/ --ext .js"
   },
   "repository": {
