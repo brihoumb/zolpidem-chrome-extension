@@ -26,6 +26,7 @@ function getURLParameter(sParam) {
 * @function restore
 */
 function restore() {
+  document.querySelector('.icon').src = '../images/zolpi_awake.svg';
   window.location.replace(getURLParameter('url') ?? window.location.href);
 }
 

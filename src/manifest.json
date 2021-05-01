@@ -1,7 +1,7 @@
 {
-  "version": "1.1",
+  "version": "1.0.2",
   "manifest_version": 3,
-  "minimum_chrome_version": "68",
+  "minimum_chrome_version": "89",
   "name": "Zolpidem Sleeping Extension",
   "description": "Suspend tabs and free your RAM.",
   "background": {
@@ -14,7 +14,7 @@
     "contextMenus"
   ],
   "host_permissions": [
-    "*://*/*"
+    "<all_urls>"
   ],
   "action": {
     "default_popup": "popup/popup.html",
@@ -27,30 +27,30 @@
     }
   },
   "icons": {
-    "16": "/images/ic_suspendy_16x16.png",
-    "32": "/images/ic_suspendy_32x32.png",
-    "48": "/images/ic_suspendy_48x48.png",
-    "128": "/images/ic_suspendy_128x128.png"
+    "16": "/images/icon16.png",
+    "32": "/images/icon32.png",
+    "48": "/images/icon48.png",
+    "128": "/images/icon128.png"
   },
   "commands": {
     "toggle_sleep": {
       "suggested_key": {
-        "default": "Ctrl+Shift+F",
-        "mac": "MacCtrl+Shift+F"
+        "mac": "MacCtrl+Shift+F",
+        "default": "Ctrl+Shift+F"
       },
       "description": "Toggle sleep to current tab."
     },
     "toggle_all_sleep": {
       "suggested_key": {
-        "default": "Ctrl+Shift+G",
-        "mac": "MacCtrl+Shift+G"
+        "mac": "MacCtrl+Shift+G",
+        "default": "Ctrl+Shift+G"
       },
       "description": "Toggle sleep to all other tabs."
     },
     "wake_all_asleep": {
       "suggested_key": {
-        "default": "Ctrl+Shift+H",
-        "mac": "MacCtrl+Shift+H"
+        "mac": "MacCtrl+Shift+H",
+        "default": "Ctrl+Shift+H"
       },
       "description": "Wake all sleeping tabs."
     }
