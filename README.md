@@ -46,7 +46,7 @@ Logo by @AydenQUILLET
 
 # **NERD ZONE** #
 ## Install from release ##
-1. Download the file [`zolpidem.zip`](https://github.com/brihoumbzolpidem-chrome-extension/releases/download/0.1.1/zolpidem.zip)
+1. Download the file [`zolpidem.zip`](https://github.com/brihoumbzolpidem-chrome-extension/releases/download/1.0.2/zolpidem.zip)
 2. Drag and drop `zolpidem.zip` in `chrome://extensions`.
 3. You can now use zolpidem chrome-extension everywhere.
 
