@@ -40,7 +40,7 @@ html, body {
 }
 
 .dragover {
-    background-color: #50c3c3 !important;
+    background-color: #50C3C3 !important;
 }
 
 .button,
@@ -53,4 +53,15 @@ html, body {
     width: 33.3%;
     display: block;
     position: relative;
+}
+
+.error {
+    background-color: #BF0000 !important;
+}
+
+.errorHandler {
+    color: white;
+    display: none;
+    font-size: 1.1em;
+    background-color: #BF0000;
 }

@@ -40,12 +40,15 @@ async function createTab(url) {
 * @return {number} - the id of the created group or -1 if no group were created.
 */
 async function setToGroup(tabs, key) {
-  if (key !== '-1') {
+  if (key === '__pinned__') {
+    tabs.forEach((tab) => {chrome.tabs.update(tab, {pinned: true})})
+    return -1;
+  } else if (key !== '-1') {
     const groupId = await chrome.tabs.group({
       tabIds: tabs,
       createProperties: {windowId: WINDOW_ID},
     });
-    await chrome.tabGroups.update(groupId, {title: key});
+    chrome.tabGroups.update(groupId, {title: key});
     return groupId;
   } else {
     return -1;
@@ -60,20 +63,37 @@ async function setToGroup(tabs, key) {
 */
 function readFile(file) {
   const reader = new FileReader();
+  const target = document.getElementById('lfile');
+  const errorHandler = document.getElementById('errorHandler');
 
   reader.readAsText(file, 'UTF-8');
   reader.onload = async (event) => {
-    const session = JSON.parse(event.target.result);
-    for (let key in session) {
-      const tabs = [];
-      for (let value in session[key]) {
-        tabs.push(await createTab(session[key][value]));
+    try {
+      target.classList.remove('error');
+      errorHandler.style.display = 'none';
+      const session = JSON.parse(event.target.result);
+      for (let key in session) {
+        const tabs = [];
+        for (let value in session[key]) {
+          tabs.push(await createTab(session[key][value]));
+        }
+        setToGroup(tabs, key);
       }
-      setToGroup(tabs, key);
+      const [tab] = await chrome.tabs.query({
+        active: true,
+        windowId: WINDOW_ID,
+      });
+      chrome.tabs.remove(tab.id);
+      WINDOW_ID = -1;
+    } catch (error) {
+      console.error('error: ', error.message);
+      target.classList.add('error');
+      errorHandler.innerText = 'error:' + error.message;
+      errorHandler.style.display = 'block';
     }
   };
-  reader.onerror = () => {
-    console.log('error reading file');
+  reader.onerror = (error) => {
+    console.error('error reading file', error);
   };
 }
 
@@ -125,7 +145,6 @@ function dropHandler(event) {
 */
 function dragOverHandler(event) {
   event.preventDefault();
-  console.log(event.target.classList);
   if (!event.target.classList.contains('dragover')) {
     event.target.classList.add('dragover');
   }
