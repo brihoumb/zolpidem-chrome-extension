@@ -20,6 +20,7 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 
   chrome.contextMenus.onClicked.addListener((info) => {
+    console.log(info);
     if (info.menuItemId === 'suspendThisTab') {
       toggleSleep();
     } else if (info.menuItemId === 'suspendAllTabs') {
