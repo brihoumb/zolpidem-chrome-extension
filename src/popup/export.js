@@ -16,35 +16,29 @@ function getTabUrl(url) {
 }
 
 /**
-* Retrieve all the url in each tab and their group and export them as a JSON.
+* Retrieve all the url in each tab and their group and respective window and export them as a JSON.
 *
 * @async
 * @function exportSession
 */
 async function exportSession() {
   let groupId = 0;
+  let session = {};
   let groupName = '';
-  let session = {} //null;
-  // const windows = [];
-  // const windowIds = [];
+  const windows = {};
   const tabs = await chrome.tabs.query({});
 
   for (let i = 0; i !== tabs.length; i++) {
+    const targetWindow = tabs[i].windowId;
     const url = getTabUrl(tabs[i].url);
-    // const windowId = tabs[i].windowId;
 
-    // console.log(windows, windowId);
-    // if (windows[windowId] == null) {
-    //   windows[windowId] = {};
-    //   windowIds.push(windowId);
-    //   session = windows[windowId];
-    // } else {
-    //   session = windows[windowId];
-    // }
-    // console.dir(windows, windowIds);
+    console.log(`${windows}, ${targetWindow}`);
+    if (!windows[targetWindow]) {
+      windows[targetWindow] = {}
+    }
     if (tabs[i].pinned && groupName !== '__pinned__') {
       groupName = '__pinned__';
-      session[groupName] = [];
+      groupId = -2;
     } else if (tabs[i].groupId !== groupId) {
       groupId = tabs[i].groupId;
       if (groupId > -1) {
@@ -53,15 +47,15 @@ async function exportSession() {
       } else {
         groupName = '-1';
       }
-      if (!(groupName in session)) {
-        session[groupName] = [];
-      }
+    }
+    if (!(groupName in windows[targetWindow])) {
+      windows[targetWindow][groupName] = [];
     }
     if (url) {
-      session[groupName].push(url);
+      windows[targetWindow][groupName].push(url);
     }
   }
-  const blob = new Blob([JSON.stringify(session, null, 2)], {type: 'application/json'});
+  const blob = new Blob([JSON.stringify({windows}, null, 2)], {type: 'application/json'});
   const url = URL.createObjectURL(blob);
   chrome.downloads.download({
     url: url,
