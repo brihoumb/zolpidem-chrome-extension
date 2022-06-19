@@ -24,15 +24,15 @@ function getTabUrl(url) {
 async function exportSession() {
   let groupId = 0;
   let groupName = '';
-  const sessions = {};
+  const instances = {};
   const tabs = await chrome.tabs.query({});
 
   for (let i = 0; i !== tabs.length; i++) {
     const targetWindow = tabs[i].windowId;
     const url = getTabUrl(tabs[i].url);
 
-    if (!sessions[targetWindow]) {
-      sessions[targetWindow] = {}
+    if (!instances[targetWindow]) {
+      instances[targetWindow] = {}
     }
     if (tabs[i].pinned && groupName !== '__pinned__') {
       groupName = '__pinned__';
@@ -45,18 +45,20 @@ async function exportSession() {
         groupName = '-1';
       }
     }
-    if (!(groupName in sessions[targetWindow])) {
-      sessions[targetWindow][groupName] = [];
+    if (!(groupName in instances[targetWindow])) {
+      instances[targetWindow][groupName] = [];
     }
     if (url) {
-      sessions[targetWindow][groupName].push(url);
+      instances[targetWindow][groupName].push(url);
     }
   }
-  const blob = new Blob([JSON.stringify({sessions}, null, 2)], {type: 'application/json'});
+  const blob = new Blob([JSON.stringify({instances}, null, 2)], {type: 'application/json'});
   const url = URL.createObjectURL(blob);
+  const date = new Date();
   chrome.downloads.download({
     url: url,
-    filename: 'session.json',
+    filename: `session.json`,
+    // filename: `zolpidem_${date.toISOString().split('T')[0].replaceAll('-', '')}_session.json`,
   });
 };
 

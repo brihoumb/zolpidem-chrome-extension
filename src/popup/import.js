@@ -56,9 +56,35 @@ async function setToGroup(tabs, key) {
 }
 
 /**
-* Load the content of the blob file and recreate the content in it.
 *
-* @function ReadFile
+* Create tabs in their respective window from the session Object.
+*
+* @async
+* @function retrieveSessionContent
+* @param {Object} session - the sessions JSON Object loaded from file.
+*/
+async function retrieveSessionContent(session) {
+  for (let windowKey in session) {
+    for (let tabKey in session[windowKey]) {
+      const tabs = [];
+      for (let value in session[windowKey][tabKey]) {
+        tabs.push(await createTab(session[windowKey][tabKey][value]));
+      }
+      setToGroup(tabs, tabKey);
+    }
+    const [tab] = await chrome.tabs.query({
+      active: true,
+      windowId: WINDOW_ID,
+    });
+    chrome.tabs.remove(tab.id);
+    WINDOW_ID = -1;
+  }
+}
+
+/**
+* Load the content of the blob file into a JSON Object.
+*
+* @function readFile
 * @param {Blob} file - the blob of the file sent in input.
 */
 function readFile(file) {
@@ -71,22 +97,8 @@ function readFile(file) {
     try {
       target.classList.remove('error');
       errorHandler.style.display = 'none';
-      const sessions = JSON.parse(event.target.result).sessions;
-      for (let windowKey in sessions) {
-        for (let tabKey in sessions[windowKey]) {
-          const tabs = [];
-          for (let value in sessions[windowKey][tabKey]) {
-            tabs.push(await createTab(sessions[windowKey][tabKey][value]));
-          }
-          setToGroup(tabs, tabKey);
-        }
-        const [tab] = await chrome.tabs.query({
-          active: true,
-          windowId: WINDOW_ID,
-        });
-        chrome.tabs.remove(tab.id);
-        WINDOW_ID = -1;
-      }
+      const session = JSON.parse(event.target.result).instances;
+      await retrieveSessionContent(session);
     } catch (error) {
       console.error('error: ', error.message);
       target.classList.add('error');
