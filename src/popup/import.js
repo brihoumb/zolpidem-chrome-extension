@@ -71,20 +71,22 @@ function readFile(file) {
     try {
       target.classList.remove('error');
       errorHandler.style.display = 'none';
-      const session = JSON.parse(event.target.result);
-      for (let key in session) {
-        const tabs = [];
-        for (let value in session[key]) {
-          tabs.push(await createTab(session[key][value]));
+      const sessions = JSON.parse(event.target.result).sessions;
+      for (let windowKey in sessions) {
+        for (let tabKey in sessions[windowKey]) {
+          const tabs = [];
+          for (let value in sessions[windowKey][tabKey]) {
+            tabs.push(await createTab(sessions[windowKey][tabKey][value]));
+          }
+          setToGroup(tabs, tabKey);
         }
-        setToGroup(tabs, key);
+        const [tab] = await chrome.tabs.query({
+          active: true,
+          windowId: WINDOW_ID,
+        });
+        chrome.tabs.remove(tab.id);
+        WINDOW_ID = -1;
       }
-      const [tab] = await chrome.tabs.query({
-        active: true,
-        windowId: WINDOW_ID,
-      });
-      chrome.tabs.remove(tab.id);
-      WINDOW_ID = -1;
     } catch (error) {
       console.error('error: ', error.message);
       target.classList.add('error');
