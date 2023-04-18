@@ -1,4 +1,4 @@
-![version](https://img.shields.io/badge/version-1.0.2-brightgreen) ![manifest_version](https://img.shields.io/badge/manifest_version-3-blue) ![chrome_version](https://img.shields.io/badge/chrome_version-89-red)  
+![version](https://img.shields.io/badge/version-1.1.0-brightgreen) ![manifest_version](https://img.shields.io/badge/manifest_version-3-blue) ![chrome_version](https://img.shields.io/badge/chrome_version-89-red)  
 # Zolpidem Chrome-Extension #
 Zolpidem is a free and open-source extension for Google Chrome to free ram when using lot of tabs.  
 It acts like the great suspender but in a cheap version.  
@@ -46,7 +46,7 @@ Logo by @AydenQUILLET
 
 # **NERD ZONE** #
 ## Install from release ##
-1. Download the file [`zolpidem.zip`](https://github.com/brihoumbzolpidem-chrome-extension/releases/download/1.0.2/zolpidem.zip)
+1. Download the file [`zolpidem.zip`](https://github.com/brihoumbzolpidem-chrome-extension/releases/download/1.1.0/zolpidem.zip)
 2. Drag and drop `zolpidem.zip` in `chrome://extensions`.
 3. You can now use zolpidem chrome-extension everywhere.
 
