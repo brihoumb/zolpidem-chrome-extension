@@ -19,8 +19,13 @@ chrome.runtime.onInstalled.addListener(() => {
     title: 'Wake all suspended tabs',
   });
 
+  chrome.action.setBadgeBackgroundColor({
+    color: [110, 100, 150, 255],
+  });
+
+  updateBadge();
+
   chrome.contextMenus.onClicked.addListener((info) => {
-    console.log(info);
     if (info.menuItemId === 'suspendThisTab') {
       toggleSleep();
     } else if (info.menuItemId === 'suspendAllTabs') {
@@ -33,12 +38,25 @@ chrome.runtime.onInstalled.addListener(() => {
 
 chrome.commands.onCommand.addListener(async (command) => {
   switch (command) {
-    case 'toggle_sleep': toggleSleep(); break;
-    case 'wake_all_asleep': wakeAllAsleep(); break;
-    case 'toggle_all_sleep': toggleAllSleep(); break;
-    default: break;
+  case 'toggle_sleep': toggleSleep(); break;
+  case 'wake_all_asleep': wakeAllAsleep(); break;
+  case 'toggle_all_sleep': toggleAllSleep(); break;
+  default: break;
   }
 });
+
+chrome.tabs.onCreated.addListener(updateBadge);
+chrome.tabs.onRemoved.addListener(updateBadge);
+
+/**
+* Update the application badge.
+*
+* @function updateBadge
+*/
+async function updateBadge() {
+  const nbOpened = await chrome.tabs.query({});
+  chrome.action.setBadgeText({text: `${nbOpened.length}`});
+}
 
 /**
 * Check if the url header does not start with the specific cases.

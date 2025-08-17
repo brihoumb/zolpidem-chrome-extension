@@ -38,17 +38,18 @@ async function createTab(url) {
 * @param {Array.<number>} tabs - the list of tabs id.
 * @param {string} key - the name of the group as a string (-1 if no group).
 * @return {number} - the id of the created group or -1 if no group were created.
+* @param {string} colour - the colour string for group.
 */
-async function setToGroup(tabs, key) {
+async function setToGroup(tabs, key, colour) {
   if (key === '__pinned__') {
-    tabs.forEach((tab) => {chrome.tabs.update(tab, {pinned: true})})
+    tabs.forEach((tab) => chrome.tabs.update(tab, {pinned: true}));
     return -1;
   } else if (key !== '-1') {
     const groupId = await chrome.tabs.group({
       tabIds: tabs,
       createProperties: {windowId: WINDOW_ID},
     });
-    chrome.tabGroups.update(groupId, {title: key});
+    chrome.tabGroups.update(groupId, {title: key, color: colour, collapsed: true});
     return groupId;
   } else {
     return -1;
@@ -61,23 +62,30 @@ async function setToGroup(tabs, key) {
 *
 * @async
 * @function retrieveSessionContent
-* @param {Object} session - the sessions JSON Object loaded from file.
+* @param {Object} instances - the instances JSON Object loaded from file.
+* @param {Object} colours - the colours JSON Object loaded from file.
 */
-async function retrieveSessionContent(session) {
-  for (let windowKey in session) {
-    for (let tabKey in session[windowKey]) {
-      const tabs = [];
-      for (let value in session[windowKey][tabKey]) {
-        tabs.push(await createTab(session[windowKey][tabKey][value]));
+async function retrieveSessionContent(instances, colours) {
+  for (const windowKey in instances) {
+    if (Object.hasOwn(instances, windowKey)) {
+      for (const tabKey in instances[windowKey]) {
+        if (Object.hasOwn(instances[windowKey], tabKey)) {
+          const tabs = [];
+          for (const value in instances[windowKey][tabKey]) {
+            if (Object.hasOwn(instances[windowKey][tabKey], value)) {
+              tabs.push(await createTab(instances[windowKey][tabKey][value]));
+            }
+          }
+          setToGroup(tabs, tabKey, colours[windowKey][tabKey]);
+        }
       }
-      setToGroup(tabs, tabKey);
+      const [tab] = await chrome.tabs.query({
+        active: true,
+        windowId: WINDOW_ID,
+      });
+      chrome.tabs.remove(tab.id);
+      WINDOW_ID = -1;
     }
-    const [tab] = await chrome.tabs.query({
-      active: true,
-      windowId: WINDOW_ID,
-    });
-    chrome.tabs.remove(tab.id);
-    WINDOW_ID = -1;
   }
 }
 
@@ -97,8 +105,9 @@ function readFile(file) {
     try {
       target.classList.remove('error');
       errorHandler.style.display = 'none';
-      const session = JSON.parse(event.target.result).instances;
-      await retrieveSessionContent(session);
+      const colours = JSON.parse(event.target.result).colours;
+      const instances = JSON.parse(event.target.result).instances;
+      await retrieveSessionContent(instances, colours);
     } catch (error) {
       console.error('error: ', error.message);
       target.classList.add('error');
